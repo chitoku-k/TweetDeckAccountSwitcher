@@ -5,8 +5,8 @@
   "main": "extension.js",
   "scripts": {
     "lint": "eslint **/*.js",
-    "deploy": "bin/deploy",
-    "test": "bin/test"
+    "deploy": "node bin/deploy",
+    "test": "node bin/test"
   },
   "repository": {
     "type": "git",
