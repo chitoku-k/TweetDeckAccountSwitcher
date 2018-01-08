@@ -3,7 +3,7 @@ language: node_js
 matrix:
   include:
     - os: linux
-      node_js: "7"
+      node_js: "9"
       sudo: required
       env: DISPLAY=':99.0'
       dist: trusty
@@ -14,7 +14,7 @@ matrix:
           packages:
             - google-chrome-stable
     - os: osx
-      node_js: "7"
+      node_js: "9"
       sudo: required
       env: HOMEBREW_CASK_OPTS='--appdir=/Applications'
 

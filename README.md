@@ -21,7 +21,7 @@ Chrome でウェブストアを開き [CHROME に追加] をクリックしま�
 
 Selenium を使用した自動テストを実行するには次の環境を準備します。
 
-- Node.js v7 以上
+- Node.js v9 以上
 - Google Chrome
 - TweetDeck のユーザー名とパスワード（テスト用推奨）
 - GUI 環境または X virtual framebuffer などの仮想ディスプレイ
