@@ -55,10 +55,15 @@ module.exports = class ChromeExtension {
         }
 
         // Copy files to the destination directory
-        await glob(this.target).then(files =>
-            files.map(filename =>
-                fs.createReadStream(filename).pipe(fs.createWriteStream(path.join("target", path.basename(filename))))
-            )
+        await Promise.all(
+            await glob(this.target).then(files =>
+                files.map(filename =>
+                    fs.copyFile(
+                        filename,
+                        path.join("target", path.basename(filename)),
+                    ),
+                ),
+            ),
         );
 
         await spawn(chrome, ["--pack-extension=" + path.resolve("target")]);
@@ -67,14 +72,22 @@ module.exports = class ChromeExtension {
             throw new Error("The extension was not created.");
         }
 
-        return await fs.realpath("target.crx");
+        return fs.realpath("target.crx");
     }
 
     async byZip(destination) {
         const zip = new JSZip();
-        for (const filename of await glob(this.target)) {
-            zip.file(path.basename(filename), await fs.readFile(filename));
-        }
+
+        await Promise.all(
+            await glob(this.target).then(files =>
+                files.map(async filename =>
+                    zip.file(
+                        path.basename(filename),
+                        await fs.readFile(filename),
+                    ),
+                ),
+            ),
+        );
 
         return fs.writeFile(destination, zip.generate({
             base64: false,
