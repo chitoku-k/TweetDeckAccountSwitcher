@@ -3,7 +3,7 @@ language: node_js
 matrix:
   include:
     - os: linux
-      node_js: '7'
+      node_js: "7"
       sudo: required
       env: DISPLAY=':99.0'
       dist: trusty
@@ -14,7 +14,7 @@ matrix:
           packages:
             - google-chrome-stable
     - os: osx
-      node_js: '7'
+      node_js: "7"
       sudo: required
       env: HOMEBREW_CASK_OPTS='--appdir=/Applications'
 
@@ -28,27 +28,17 @@ env:
     - GOOGLE_EXTENSION_ID='cjnfkpniglbbhifpkfnclpndpbhmfllh'
 
 before_install:
-  - |
-    if [ "$TRAVIS_OS_NAME" = "osx" ]; then
-      brew update > /dev/null
-      brew cask install google-chrome
-    fi
+  - bin/.travis/before_install
 
 install:
   - npm install
 
 before_script:
-  - |
-    if [ "$TRAVIS_OS_NAME" = "linux" ]; then
-      sh -e /etc/init.d/xvfb start
-    fi
+  - bin/.travis/before_script
 
 script:
   - npm run lint
   - npm test
 
 after_success:
-  - |
-    if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_TAG" != "" ] && [ "$TRAVIS_OS_NAME" = "linux" ]; then
-      npm run deploy
-    fi
+  - bin/.travis/after_success

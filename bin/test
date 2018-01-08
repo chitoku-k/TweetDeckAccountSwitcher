@@ -1,10 +1,12 @@
+#!/usr/bin/env node
+
 const fs = require("mz/fs");
 const assert = require("assert");
 const webdriver = require("selenium-webdriver");
 const By = webdriver.By;
 const until = webdriver.until;
-const ChromeExtension = require("./ChromeExtension");
-const WebDriver = require("./WebDriver");
+const ChromeExtension = require("./scripts/ChromeExtension");
+const WebDriver = require("./scripts/WebDriver");
 
 (async () => {
     try {

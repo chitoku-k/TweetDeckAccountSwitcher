@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+if [[ "$TRAVIS_OS_NAME" = "osx" ]]; then
+    brew update > /dev/null
+    brew cask install google-chrome
+fi
