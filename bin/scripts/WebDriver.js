@@ -14,16 +14,14 @@ module.exports = class WebDriver {
 
         this.timeout = timeout;
         this.driver = builder.build();
-        this.action = new webdriver.ActionSequence(this.driver);
     }
 
     initialize() {
-        const timeouts = this.driver.manage().timeouts();
-        return Promise.all([
-            timeouts.implicitlyWait(this.timeout),
-            timeouts.pageLoadTimeout(this.timeout),
-            timeouts.setScriptTimeout(this.timeout),
-        ]);
+        return this.driver.manage().setTimeouts({
+            implicit: this.timeout,
+            pageLoad: this.timeout,
+            script: this.timeout,
+        });
     }
 
     trigger(event, selector) {
