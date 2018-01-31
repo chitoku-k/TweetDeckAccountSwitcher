@@ -22,7 +22,6 @@
   },
   "homepage": "https://github.com/chitoku-k/TweetDeckAccountsSwitcher#readme",
   "devDependencies": {
-    "child-process-promise": "^2.2.1",
     "chrome-extension-deploy": "^3.0.0",
     "chromedriver": "^2.35.0",
     "eslint": "^4.16.0",
@@ -31,8 +30,5 @@
     "mz": "^2.7.0",
     "node-zip": "^1.1.1",
     "selenium-webdriver": "^4.0.0-alpha.1"
-  },
-  "optionalDependencies": {
-    "regedit": "^2.2.7"
   }
 }

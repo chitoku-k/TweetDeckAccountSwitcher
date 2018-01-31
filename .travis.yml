@@ -37,8 +37,7 @@ before_script:
   - bin/.travis/before_script
 
 script:
-  - npm run lint
-  - npm test
+  - bin/.travis/script
 
 after_success:
   - bin/.travis/after_success

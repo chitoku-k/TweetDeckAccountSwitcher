@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+npm run lint
+
+if [[ "$TRAVIS_PULL_REQUEST" = "false" ]]; then
+    npm test
+fi
