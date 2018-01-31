@@ -24,13 +24,13 @@
   "devDependencies": {
     "child-process-promise": "^2.2.1",
     "chrome-extension-deploy": "^3.0.0",
-    "chromedriver": "^2.34.1",
-    "eslint": "^4.15.0",
+    "chromedriver": "^2.35.0",
+    "eslint": "^4.16.0",
     "glob": "^7.1.2",
     "glob-promise": "^3.3.0",
     "mz": "^2.7.0",
     "node-zip": "^1.1.1",
-    "selenium-webdriver": "^3.6.0"
+    "selenium-webdriver": "^4.0.0-alpha.1"
   },
   "optionalDependencies": {
     "regedit": "^2.2.7"
