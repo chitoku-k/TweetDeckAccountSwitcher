@@ -6,7 +6,7 @@ module.exports = class WebDriver {
     constructor(path, timeout) {
         const options = new chrome.Options();
         options.addArguments("no-sandbox");
-        options.addExtensions(path);
+        options.addArguments("load-extension=" + path);
 
         const builder = new webdriver.Builder();
         builder.forBrowser("chrome");
@@ -22,9 +22,5 @@ module.exports = class WebDriver {
             pageLoad: this.timeout,
             script: this.timeout,
         });
-    }
-
-    trigger(event, selector) {
-        return this.driver.executeScript("$('" + selector + "').trigger('" + event + "')");
     }
 };

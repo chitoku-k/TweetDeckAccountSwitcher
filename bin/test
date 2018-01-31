@@ -14,13 +14,8 @@ const WebDriver = require("./scripts/WebDriver");
             throw new Error("Username or password must be specified.");
         }
 
-        // Create package
-        const extension = new ChromeExtension("src/*");
-        const filename = await extension.byCrx();
-        console.log("Test: Package is generated.");
-
         // Initialize
-        const test = new WebDriver(filename, 30000);
+        const test = new WebDriver(await fs.realpath("src"), 30000);
         await test.initialize();
 
         await test.driver.get("https://tweetdeck.twitter.com");
@@ -51,47 +46,66 @@ const WebDriver = require("./scripts/WebDriver");
         const main = await test.driver.findElement(By.css(".application"));
 
         // Since the app is loaded, shorten timeout value.
-        await test.driver.manage().timeouts().implicitlyWait(0);
+        await test.driver.manage().setTimeouts({
+            implicit: 0,
+        });
         console.log("Test: Application is loaded.");
 
         for (let i = 0; i < 5; i++) {
             console.log(`Test: New Tweet (${i + 1}/5)`);
 
             // New Tweet button
-            await test.trigger("click", ".js-show-drawer.btn-compose");
+            const button = await test.driver.findElement(By.css(".js-show-drawer.btn-compose"));
+            await button.click();
+
+            // Wait until the buttons become available
+            await test.driver.wait(until.elementLocated(By.css(".js-send-button")), test.timeout);
 
             for (let j = 0; j < 50; j++) {
                 const accounts = await main.findElements(By.css(".js-account-list .js-account-item"));
                 const target = accounts[Math.floor(Math.random() * accounts.length)];
                 const key = await target.getAttribute("data-account-key");
-                await test.trigger("click", `.js-account-item[data-account-key="${key}"]`)
+                const item = await test.driver.findElement(By.css(`.js-account-item[data-account-key="${key}"]`));
+                await item.click();
 
                 const current = await main.findElements(By.css(".js-account-list .js-account-item.is-selected"));
                 assert(current.length <= 1);
             }
 
             // Close Tweet drawer
-            await test.trigger("click", ".js-drawer-close");
+            const closer = await test.driver.findElement(By.css(".js-drawer-close"));
+            await closer.click();
         }
+
+        // Reopen Tweet drawer
+        const button = await test.driver.findElement(By.css(".js-show-drawer.btn-compose"));
+        await button.click();
+        await test.driver.wait(until.elementLocated(By.css(".js-show-drawer.btn-compose.is-hidden")), test.timeout);
 
         for (let i = 0; i < 5; i++) {
             console.log(`Test: Retweet (${i + 1}/5)`);
 
             // Open Retweet modal
-            await test.trigger("click", "a.tweet-action[rel=retweet]");
+            const retweet = await test.driver.findElement(By.css("a.tweet-action[rel=retweet]"));
+            await retweet.click();
+
+            // Wait until the dialog becomes available
+            await test.driver.wait(until.elementLocated(By.css(".js-retweet-button")), test.timeout);
 
             for (let j = 0; j < 50; j++) {
                 const accounts = await main.findElements(By.css("ul.js-account-selector li.js-account-item"));
                 const target = accounts[Math.floor(Math.random() * accounts.length)];
                 const id = await target.getAttribute("data-id");
-                await test.trigger("click", `li.js-account-item[data-id="${id}"]`);
+                const item = await test.driver.findElement(By.css(`li.js-account-item[data-id="${id}"]`));
+                await item.click();
 
                 const current = await main.findElements(By.css("li.acc-selected"));
                 assert(current.length <= 1);
             }
 
             // Close Retweet modal
-            await test.trigger("click", ".js-dismiss");
+            const closer = await test.driver.findElement(By.css(".js-dismiss"));
+            await closer.click();
         }
 
         await test.driver.quit();
