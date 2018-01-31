@@ -32,5 +32,4 @@ jspm_packages
 .env
 
 # Outpus
-target
-target.*
+dist

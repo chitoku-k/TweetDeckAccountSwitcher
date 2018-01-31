@@ -4,10 +4,13 @@
     "manifest_version": 2,
     "description": "TweetDeck のアカウント選択を複数選択ではなく切り替えになるように拡張します。",
     "icons": {
-        "128": "./icon_128.png"
+        "128": "img/icon_128.png"
     },
+    "web_accessible_resources": [
+        "js/inject.js"
+    ],
     "content_scripts": [{
-        "js": ["./main.js"],
+        "js": ["js/content.js"],
         "matches": ["https://tweetdeck.twitter.com/*"],
         "run_at": "document_idle"
     }]

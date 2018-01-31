@@ -4,7 +4,7 @@
   "description": "Forces Accounts Selector in TweetDeck to Choose One Account",
   "main": "extension.js",
   "scripts": {
-    "lint": "eslint **/*.js",
+    "build": "webpack",
     "deploy": "node bin/deploy",
     "test": "node bin/test"
   },
@@ -22,13 +22,18 @@
   },
   "homepage": "https://github.com/chitoku-k/TweetDeckAccountsSwitcher#readme",
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
     "chrome-extension-deploy": "^3.0.0",
     "chromedriver": "^2.35.0",
-    "eslint": "^4.16.0",
-    "glob": "^7.1.2",
-    "glob-promise": "^3.3.0",
+    "clean-webpack-plugin": "^0.1.18",
+    "copy-webpack-plugin": "^4.3.1",
+    "eslint": "^4.17.0",
+    "eslint-loader": "^1.9.0",
     "mz": "^2.7.0",
-    "node-zip": "^1.1.1",
-    "selenium-webdriver": "^4.0.0-alpha.1"
+    "selenium-webdriver": "^4.0.0-alpha.1",
+    "webpack": "^3.10.0",
+    "zip-webpack-plugin": "^2.1.0"
   }
 }

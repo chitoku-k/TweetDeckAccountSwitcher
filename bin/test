@@ -5,7 +5,6 @@ const assert = require("assert");
 const webdriver = require("selenium-webdriver");
 const By = webdriver.By;
 const until = webdriver.until;
-const ChromeExtension = require("./scripts/ChromeExtension");
 const WebDriver = require("./scripts/WebDriver");
 
 (async () => {
@@ -15,7 +14,7 @@ const WebDriver = require("./scripts/WebDriver");
         }
 
         // Initialize
-        const test = new WebDriver(await fs.realpath("src"), 30000);
+        const test = new WebDriver(await fs.realpath("dist"), 30000);
         await test.initialize();
 
         await test.driver.get("https://tweetdeck.twitter.com");

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-npm run lint
+npm run build
 
 if [[ "$TRAVIS_PULL_REQUEST" = "false" ]]; then
     npm test

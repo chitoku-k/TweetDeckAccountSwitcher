@@ -2,15 +2,10 @@
 
 const fs = require("mz/fs");
 const deploy = require("chrome-extension-deploy");
-const ChromeExtension = require("./scripts/ChromeExtension");
 
 (async () => {
-    const filename = "target.zip";
+    const filename = "dist/extension.zip";
     try {
-        const extension = new ChromeExtension("src/**");
-        await extension.byZip(filename);
-        console.log("Deploy: Archive is created.")
-
         const zip = await fs.readFile(filename);
         await deploy({
             zip,
