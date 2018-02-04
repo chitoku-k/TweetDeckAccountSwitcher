@@ -1,11 +1,13 @@
 language: node_js
+node_js: "9"
+sudo: required
 
 matrix:
   include:
     - os: linux
-      node_js: "9"
-      sudo: required
-      env: DISPLAY=':99.0'
+      env:
+        - BROWSER='chrome'
+        - DISPLAY=':99.0'
       dist: trusty
       addons:
         apt:
@@ -13,10 +15,20 @@ matrix:
             - google-chrome
           packages:
             - google-chrome-stable
+    - os: linux
+      env:
+        - BROWSER='firefox'
+        - DISPLAY=':99.0'
+      addons:
+        firefox: latest-dev
     - os: osx
-      node_js: "9"
-      sudo: required
-      env: HOMEBREW_CASK_OPTS='--appdir=/Applications'
+      env:
+        - BROWSER='chrome'
+        - HOMEBREW_CASK_OPTS='--appdir=/Applications'
+    - os: osx
+      env:
+        - BROWSER='firefox'
+        - HOMEBREW_CASK_OPTS='--appdir=/Applications'
 
 cache:
   directories:
@@ -24,7 +36,7 @@ cache:
 
 env:
   global:
-    - secure: "Lr7BafmQxYiBbvwxdfdyOGpYexK5dRBIf56lYaQIL4Xh7E3GrtgNjZGKBR/2mZ7KSzxcqqrAmBH5vh6ZQ7jWFWaA1U+lh+Y+Mh9Om3gALVpk6lhdwlfmMccTJhrx5qwL5J3+KIcxVl1C2dSwmmEIMF1ekgZyrXCCgp/fof+iT2vx+wvtpSRLM2qkVLRK5dPwB0AU/VTlHRK+7KKS6x9PJ88+eZhmbvI4jC7wIfUVLJ0FwyNYu5YmfoWgeQLddeePXn+BZ/Gtmx/oM8K4iZ24162GJchJaUZJqTKOFhBkOJmOx5KrFFctpjkFq+WHATxSOafUAbTlAz9cE8ukA7xOfODrcYyt5DQEymR6iZLi7ZZnqEjeXihUUf+FNG9mYqyJMj+RRhu9Akrf4yOF/H3eZqVU3ZbZmDKoH0Rv46GlrzBP1cOwWXmKFSJ5vNBslIwWqEPFbWwLFLoba+ur2O2jsUZhxAak6cygEokqSYnbvPYa4MHH3pxswBQJhqFH88NhtUalOiWGxZtg9SPWvKydXKAWgpZEs/n0m7+H4FSyyTkMYKppc6XcbK0uHg5qwSGkvt7W/HhTMQ8uujAgGxBePBNQxjoZeScO+mHliKDMlbDmYeBtN8+nkvoQXvpAhaLbRC/xMFcnC2MB3aRP91912ZdBK55630W2ZTJjY6433ZI="
+    - secure: "CpG815LM2rpdo6V3loMJVP6k7yca8Xm61aiu4z9znL31RVZhMVezOqiMp95YxT9WCyFYJnUbbz13g9Sr6Wh4qgagiCUUGOPRQPWGdl0NLhVtrRBgT3UiHTnKHhSP8qk8ggvLrbr3oxQeG04RAB5FYN0WGx4XfEpqnVri1Sq92eT2OvSt6VUYb7M42L/1qGb7aZuOQuq7hid0wNE6f5udSopqRTSpiKxu1KCez0IPl/8xOznOJ3vqxb4G494iHlCWPKh/FBVo2P8o2FHGxG71bCVd7Vgsgh2RBChMs+hhcSRRLt0PjFjIzGLuF10j/AsqtGR3MJhUZ9k6R0sj382EUb0+AI/NkXlZqn/96c3OxExA3c1YBE4qO0gsp8L9RqAXhMQ/3k1L/hpCDnqKdIFdsH9rv6xpKD3XGj0w1WoODXfoC7SgvmdH/X0onvU74CIPcNGRzHLrlzdRw8vwk7Z3n0lo19OYd7zq18TYymKGQVrjG/ztW8KkMpcgS+hjz7o/ytjPlcB/8UZw4Xo17ANLvmCp09O6MGg5otqkfU/0Phz79r0JPmckohmQG3i7sqQYdrBO9FB1Z9RdOI9hZzljldatx6niNAWBdbPTWnFYwVp4OhmXiCOCILOoJ5g+h7bcJXU//ZYn8BzNzMXyPGyA/Z/3axJNpKNH6XxvGMN4kW8="
     - GOOGLE_EXTENSION_ID='cjnfkpniglbbhifpkfnclpndpbhmfllh'
 
 before_install:

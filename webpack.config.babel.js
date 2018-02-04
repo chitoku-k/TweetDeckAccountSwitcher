@@ -2,6 +2,7 @@ import path from "path";
 import webpack from "webpack";
 import CleanPlugin from "clean-webpack-plugin";
 import CopyPlugin from "copy-webpack-plugin";
+import GenerateJsonPlugin from "generate-json-webpack-plugin";
 import ZipPlugin from "zip-webpack-plugin";
 
 module.exports = {
@@ -10,7 +11,7 @@ module.exports = {
         "js/content": "./src/js/content.js",
     },
     output: {
-        path: path.join(__dirname, "/dist"),
+        path: path.join(__dirname, "/dist", process.env.BROWSER),
         filename: "[name].js",
     },
     module: {
@@ -40,17 +41,20 @@ module.exports = {
                 from: "img/*",
                 context: "./src",
             },
-            {
-                from: "manifest.json",
-                context: "./src",
-            },
         ]),
+        new GenerateJsonPlugin(
+            "manifest.json",
+            require(path.join(__dirname, "/src/manifests/", process.env.BROWSER)).default,
+            null,
+            4,
+        ),
         new CleanPlugin(
-            path.join(__dirname, "/dist/**"),
+            path.join(__dirname, "/dist", process.env.BROWSER, "/**"),
         ),
         new ZipPlugin({
-            path: path.join(__dirname, "/dist"),
+            path: path.join(__dirname, "/dist", process.env.BROWSER),
             filename: "extension",
+            extension: { firefox: "xpi" }[process.env.BROWSER],
         }),
     ],
 };

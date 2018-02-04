@@ -7,18 +7,21 @@ environment:
   TEST_TWITTER_PASSWORD:
     secure: Bzu68YBGyvleQ4hMd9PFC1yhC77pBzQGB2awGbENXsrHRsziG1TyUWCOS8FsSPOG
 
+  matrix:
+    - BROWSER: chrome
+    - BROWSER: firefox
+
 cache: node_modules
 build: off
 deploy: off
 
 install:
-  - ps: >-
-      Install-Product node 9 x64
-
-      npm install; $true
+  - ps: $firefox = 'https://download.mozilla.org/?product=firefox-devedition-stub&os=win&lang=ja'
+  - ps: Start-FileDownload $firefox -FileName 'Installer.exe'
+  - ps: .\Installer.exe | Out-Null
+  - ps: Install-Product node 9 x64
+  - cmd: npm install
 
 test_script:
-  - ps: >-
-      npm run build
-
-      npm test
+  - cmd: npm run build
+  - cmd: npm test

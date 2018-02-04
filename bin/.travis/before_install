@@ -2,5 +2,13 @@
 
 if [[ "$TRAVIS_OS_NAME" = "osx" ]]; then
     brew update > /dev/null
-    brew cask install google-chrome
+
+    if [[ "$BROWSER" = "chrome" ]]; then
+        brew cask install google-chrome
+    fi
+
+    if [[ "$BROWSER" = "firefox" ]]; then
+        brew tap caskroom/versions
+        brew cask install firefox-developer-edition
+    fi
 fi

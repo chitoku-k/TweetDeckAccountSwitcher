@@ -1,21 +1,30 @@
-#!/usr/bin/env node
-
-const fs = require("mz/fs");
 const assert = require("assert");
+const fs = require("mz/fs");
+const path = require("path");
 const webdriver = require("selenium-webdriver");
 const By = webdriver.By;
 const until = webdriver.until;
-const WebDriver = require("./scripts/WebDriver");
+const WebDriver = require("./drivers/WebDriver");
 
 (async () => {
     try {
         if (!process.env.TEST_TWITTER_USERNAME || !process.env.TEST_TWITTER_PASSWORD) {
-            throw new Error("Username or password must be specified.");
+            throw new Error("TEST_TWITTER_USERNAME and TEST_TWITTER_PASSWORD must be specified.");
+        }
+
+        if (!WebDriver[process.env.BROWSER]) {
+            throw new Error("BROWSER must be specified.");
         }
 
         // Initialize
-        const test = new WebDriver(await fs.realpath("dist"), 30000);
-        await test.initialize();
+        const test = new WebDriver[process.env.BROWSER](30000);
+        await test.initialize(
+            path.join(
+                await fs.realpath("dist"),
+                process.env.BROWSER,
+                process.env.BROWSER === "firefox" ? "/extension.xpi" : "",
+            ),
+        );
 
         await test.driver.get("https://tweetdeck.twitter.com");
         await test.driver.wait(until.titleIs("TweetDeck"));
@@ -37,7 +46,8 @@ const WebDriver = require("./scripts/WebDriver");
         await password.sendKeys(process.env.TEST_TWITTER_PASSWORD);
 
         // Execute login
-        await form.submit();
+        const submit = await test.driver.findElement(By.css("form.signin .submit"));
+        await submit.click();
         console.log("Test: Logged into TweetDeck.");
 
         // TweetDeck

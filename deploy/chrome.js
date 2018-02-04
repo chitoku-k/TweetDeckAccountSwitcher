@@ -1,10 +1,8 @@
-#!/usr/bin/env node
-
 const fs = require("mz/fs");
 const deploy = require("chrome-extension-deploy");
 
 (async () => {
-    const filename = "dist/extension.zip";
+    const filename = "dist/chrome/extension.zip";
     try {
         const zip = await fs.readFile(filename);
         await deploy({
