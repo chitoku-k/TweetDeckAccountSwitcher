@@ -22,7 +22,7 @@ Chrome でウェブストアを開き [CHROME に追加] をクリックしま�
 Selenium を使用した自動テストを実行するには次の環境を準備します。
 
 - Node.js v9 以上
-- Google Chrome
+- Google Chrome または Firefox Developer Edition
 - TweetDeck のユーザー名とパスワード（テスト用推奨）
 - GUI 環境または X virtual framebuffer などの仮想ディスプレイ
 
@@ -36,13 +36,15 @@ $ npm install
 
 ### 実行
 
-コマンドを実行すると Chrome が自動で起動/終了してパッケージを生成し動作を確認します。
+コマンドを実行すると Chrome/Firefox が自動で起動/終了してパッケージを生成し動作を確認します。<br>
+`BROWSER` は `chrome` または `firefox` を指定します。
 
 #### Linux/macOS の場合
 
 ```bash
 $ export TEST_TWITTER_USERNAME='<Your TweetDeck Username>'
 $ export TEST_TWITTER_PASSWORD='<Your TweetDeck Password>'
+$ export BROWSER='chrome'
 $ npm test
 ```
 
@@ -51,6 +53,7 @@ $ npm test
 ```dos
 > SET TEST_TWITTER_USERNAME=<Your TweetDeck Username>
 > SET TEST_TWITTER_PASSWORD=<Your TweetDeck Password>
+> SET BROWSER=chrome
 > npm test
 ```
 
