@@ -92,13 +92,13 @@ const WebDriver = require("./scripts/WebDriver");
             await test.driver.wait(until.elementLocated(By.css(".js-retweet-button")), test.timeout);
 
             for (let j = 0; j < 50; j++) {
-                const accounts = await main.findElements(By.css("ul.js-account-selector li.js-account-item"));
+                const accounts = await main.findElements(By.css("ul.js-account-selector a.js-account-item"));
                 const target = accounts[Math.floor(Math.random() * accounts.length)];
                 const id = await target.getAttribute("data-id");
-                const item = await test.driver.findElement(By.css(`li.js-account-item[data-id="${id}"]`));
+                const item = await test.driver.findElement(By.css(`a.js-account-item[data-id="${id}"]`));
                 await item.click();
 
-                const current = await main.findElements(By.css("li.acc-selected"));
+                const current = await main.findElements(By.css("ul.js-account-selector a.is-selected"));
                 assert(current.length <= 1);
             }
 
